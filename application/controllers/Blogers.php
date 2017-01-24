@@ -59,7 +59,7 @@ class Blogers extends CI_Controller
         else {
 
             $this->blogers_model->create();
-            set_cookie('login', $this->blogers_model->data['login']);
+            /*set_cookie('login', $this->blogers_model->data['login']);
 
             $cookie = $this->blogers_model->data['cookie'] = get_cookie('login');
 
@@ -70,7 +70,8 @@ class Blogers extends CI_Controller
                 $this->load->view('templates/header');
                 $this->load->view('blogers/success');
                 $this->load->view('templates/footer');
-            }
+            }*/
+
 
             $this->load->view('templates/header');
             $this->load->view('blogers/success');
