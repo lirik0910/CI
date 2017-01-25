@@ -1,8 +1,5 @@
-<?php
+<h3>Your form was successfully submitted!</h3>
 
-echo 'Success!!';
-echo $cookie;
+<p><?php echo anchor('blogers/create', 'Back!'); ?></p>
 
-?>
 
-<p><a href="<?php echo site_url('blogers/create'); ?>">Назад</a></p>

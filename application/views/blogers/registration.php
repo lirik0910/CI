@@ -1,6 +1,6 @@
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('blogers/create'); ?>
+<?php echo form_open('blogers/registration'); ?>
 
 <h5>Firstname</h5>
 <input type="text" name="firstname" value="<?php echo set_value('firstname'); ?>" size="50" />
