@@ -50,7 +50,7 @@ class Blogers_model extends CI_Model
 
     public function is_logged_in()
     {
-        $last_activity = $this->session->userdata('last_activity');
+        //$last_activity = $this->session->userdata('last_activity');
         $logged_in = $this->session->userdata('logged_in');
         $user = $this->session->userdata('user');
 

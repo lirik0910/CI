@@ -14,7 +14,7 @@ class Blogers extends CI_Controller
     public function registration()
     {
         $this->load->helper(array ('form', 'cookie'));
-        $this->load->library('form_validation');
+        //$this->load->library('form_validation');
 
         //var_dump($this->blogers_model->is_logged_in()); die;
         if($this->blogers_model->is_logged_in() == true){
@@ -64,21 +64,7 @@ class Blogers extends CI_Controller
         }
 
         else {
-
-            //$this->blogers_model->create();
-            /*set_cookie('login', $this->blogers_model->data['login']);
-
-            $cookie = $this->blogers_model->data['cookie'] = get_cookie('login');
-
-            if($cookie !== NULL){
-
-                var_dump($cookie);
-
-                $this->load->view('templates/header');
-                $this->load->view('blogers/success');
-                $this->load->view('templates/footer');
-            }*/
-
+            $this->blogers_model->create();
 
             $this->load->view('templates/header');
             $this->load->view('blogers/success');

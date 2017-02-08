@@ -8,6 +8,9 @@ foreach ($this->session->__get('user') as $item => $value):
     <?php endif;
  endforeach;
  endif;
-
+echo $date;?>
+<br>
+<br>
+<?php
  echo 'Main page';
  ?>

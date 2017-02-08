@@ -53,11 +53,12 @@ $route['blogers/logout'] = 'blogers/logout';
 $route['blogers/login'] = 'blogers/login';
 $route['blogers/registration'] = 'blogers/registration';
 $route['blogers'] = 'blogers';
-$route['articles/(:any)'] = 'articles/create/$1';
+$route['articles/new'] = 'articles/create';
 $route['articles'] = 'articles';
 $route['news/create'] = 'news/create';
 $route['news/(:any)'] = 'news/view/$1';
 $route['news'] = 'news';
-$route['(:any)'] = 'pages/view/$1';
+$route['pages/personal/$1'] = 'pages/viewOne/$1';
+$route['pages/view'] = 'pages/view';
 $route['default_controller'] = 'pages/view';
 

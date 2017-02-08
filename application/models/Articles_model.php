@@ -15,8 +15,33 @@ class Articles_model extends CI_Model
         $this->load->database();
         $this->date = $this->load->helper('date');
     }
-    public function get_one()
+    public function create($b_id)
     {
-        echo '+1';
+        $this->load->helper(['url', 'date']);
+
+        $slug = url_title($this->input->post('title'), 'dash', TRUE);
+        $date = mdate('%Y-%m-%d %h:%i:%s');
+
+        $data = [
+            'title' => $this->input->post('title'),
+            'text' => $this->input->post('text'),
+            'date' => $date,
+            'bloger_id' => $b_id,
+            'slug' => $slug
+        ];
+
+        return $this->db->insert('articles', $data);
+    }
+    public function get_articles($b_id = NULL)
+    {
+        $this->load->helper('url');
+
+        if ($b_id === FALSE)
+        {
+            $query = $this->db->get('articles');
+            return $query->result_array();
+        }
+        $query = $this->db->get_where('articles', ['bloger_id' => $b_id]);
+        return $query->row_array();
     }
 }
