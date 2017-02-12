@@ -57,4 +57,58 @@ class Articles extends CI_Controller
             $this->load->view('templates/footer');
         }
     }
+    public function update($id)
+    {
+        $data = $this->articles_model->get_by_id($id);
+
+        $config = [
+            [
+                'field' => 'title',
+                'label' => 'Title',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'text',
+                'label' => 'Text',
+                'rules' => 'required'
+            ]
+        ];
+
+        $this->form_validation->set_rules($config);
+
+        if($this->form_validation->run() == FALSE){
+
+            $this->load->view('templates/header');
+            $this->load->view('articles/update', $data);
+            $this->load->view('templates/footer');
+        }
+        else {
+            $this->articles_model->update($id);
+
+            $this->load->view('templates/header');
+            $this->load->view('articles/success');
+            $this->load->view('templates/footer');
+        }
+    }
+    public function delete($id)
+    {
+        if($this->blogers_model->is_logged_in() == false){
+            redirect('pages/view');
+        }
+        //$query = $this->articles_model->last_query();
+        //var_dump($query); die;
+        $this->articles_model->delete($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('articles/success');
+        $this->load->view('templates/footer');
+    }
+    public function viewOne($id)
+    {
+        $data['article'] = $this->articles_model->get_by_id($id);
+
+        $this->load->view('templates/header');
+        $this->load->view('articles/one', $data);
+        $this->load->view('templates/footer');
+    }
 }

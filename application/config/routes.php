@@ -53,6 +53,7 @@ $route['blogers/logout'] = 'blogers/logout';
 $route['blogers/login'] = 'blogers/login';
 $route['blogers/registration'] = 'blogers/registration';
 $route['blogers'] = 'blogers';
+$route['articles/update/$1'] = 'articles/update/$1';
 $route['articles/new'] = 'articles/create';
 $route['articles'] = 'articles';
 $route['news/create'] = 'news/create';

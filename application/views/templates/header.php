@@ -3,4 +3,6 @@
         <title>CI_blog</title>
     </head>
     <body>
-    <h1><?php //echo $title; ?></h1>
+    <a href="<?php echo site_url('pages/view'); ?>">Главная</a>
+    <a href="<?php echo site_url('pages/viewOne'); ?>">Персональная страица</a>
+    <?php var_dump($this->blogers_model->is_logged_in()); ?>

@@ -8,18 +8,22 @@ class Blogers extends CI_Controller
         $this->load->model('blogers_model');
         $this->load->library('session');
         $this->load->library('form_validation');
-        $this->load->helper('url_helper');
+        $this->load->helper('url');
+
     }
 
     public function registration()
     {
         $this->load->helper(array ('form', 'cookie'));
+        $this->load->model('countries_model');
         //$this->load->library('form_validation');
 
         //var_dump($this->blogers_model->is_logged_in()); die;
         if($this->blogers_model->is_logged_in() == true){
             redirect('pages/view');
         }
+
+        $data['countries'] = $this->countries_model->get_names();
 
         $config = [
             [
@@ -51,6 +55,26 @@ class Blogers extends CI_Controller
                 'field' => 'passconf',
                 'label' => 'Password Confirmation',
                 'rules' => 'required|matches[password]'
+            ],
+            [
+                'field' => 'email',
+                'label' => 'Email',
+                'rules' => 'required|valid_email|is_unique[blogers.email]'
+            ],
+            [
+                'field' => 'age',
+                'label' => 'Age',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'country',
+                'label' => 'Country',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'city',
+                'label' => 'City',
+                'rules' => 'required'
             ]
         ];
 
@@ -59,7 +83,7 @@ class Blogers extends CI_Controller
         if($this->form_validation->run() == FALSE){
 
             $this->load->view('templates/header');
-            $this->load->view('blogers/registration');
+            $this->load->view('blogers/registration', $data);
             $this->load->view('templates/footer');
         }
 
@@ -102,6 +126,65 @@ class Blogers extends CI_Controller
     public function logout()
     {
         $this->blogers_model->remove_pass();
-        redirect('blogers/login');
+        redirect('pages/view');
+    }
+    public function update($login)
+    {
+        $this->load->helper('email');
+        $this->load->helper('date');
+        $this->load->library('email');
+        $this->load->model(['cities_model', 'countries_model']);
+
+        if($this->blogers_model->is_logged_in() == false){
+            redirect('pages/view');
+        }
+
+        $data = $this->blogers_model->get_by_login($login);
+        $data['countries'] = $this->countries_model->get_names();
+        //$data['cities'] = $this->cities_model->get_names();
+
+        $config = [
+            [
+                'field' => 'firstname',
+                'label' => 'Firstname',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'secondname',
+                'label' => 'Secondname',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'age',
+                'label' => 'Age',
+                'rules' => 'required',
+            ],
+            [
+                'field' => 'country',
+                'label' => 'Country',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'city',
+                'label' => 'City',
+                'rules' => 'required'
+            ]
+        ];
+
+        $this->form_validation->set_rules($config);
+
+        if($this->form_validation->run() == FALSE){
+
+            $this->load->view('templates/header');
+            $this->load->view('blogers/update', $data);
+            $this->load->view('templates/footer');
+        } else {
+            //var_dump($this->input->post('age')); die;
+            $this->blogers_model->update($data['id']);
+
+            $this->load->view('templates/header');
+            $this->load->view('blogers/success');
+            $this->load->view('templates/footer');
+        }
     }
 }

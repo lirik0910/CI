@@ -6,6 +6,7 @@ class Pages extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
+        $this->load->helper('url');
         $this->load->model(['blogers_model', 'articles_model']);
     }
 
@@ -25,7 +26,7 @@ class Pages extends CI_Controller
         $this->load->view('pages/' . $page, $data);
         $this->load->view('templates/footer', $data);
     }
-    public function viewOne($id = NULL)
+    public function viewOne($b_id = NULL)
     {
         if($this->blogers_model->is_logged_in() == false){
             redirect('pages/view');
@@ -34,16 +35,24 @@ class Pages extends CI_Controller
         foreach ($this->session->__get('user') as $item => $value)
         {
             if($item == 'id'){
-                $id = $value;
+                $b_id = $value;
             } elseif ($item == 'firstname'){
                 $data['firstname'] = $value;
             } elseif ($item == 'secondname'){
                 $data['secondname'] = $value;
+            } elseif ($item == 'login'){
+                $data['login'] = $value;
+            } elseif ($item == 'age'){
+                $data['age'] = $value;
+            } elseif ($item == 'country'){
+                $data['country'] = $value;
+            } elseif ($item == 'city'){
+                $data['city'] = $value;
             }
         }
+        $data['articles'] = $this->articles_model->get_articles($b_id);
 
-        $data['articles'] = $this->articles_model->get_articles($id);
-        //var_dump($data['articles'] ['title']); die;
+        //var_dump($data['articles'] ); die;
 
         $this->load->view('templates/header');
         $this->load->view('pages/personal', $data);

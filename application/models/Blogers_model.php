@@ -2,7 +2,7 @@
 
 class Blogers_model extends CI_Model
 {
-    public $table = 'blogers';
+    private $table = 'blogers';
     public $max_idle_time = 300;
     public $data = [];
 
@@ -13,7 +13,7 @@ class Blogers_model extends CI_Model
 
     public function create()
     {
-        $this->load->helper('url');
+        //$this->load->helper('url');
 
         $slug = url_title($this->input->post('login'), 'dash', TRUE);
 
@@ -22,6 +22,10 @@ class Blogers_model extends CI_Model
             'secondname' => $this->input->post('secondname'),
             'login' => $this->input->post('login'),
             'password' => $this->input->post('password'),
+            'email' => $this->input->post('email'),
+            'age' => $this->input->post('age'),
+            'country' => $this->input->post('country'),
+            'city' => $this->input->post('city'),
             'slug' => $slug
         ];
 
@@ -61,6 +65,23 @@ class Blogers_model extends CI_Model
             $this->remove_pass();
             return false;
         }
+    }
+    public function update($id)
+    {
+        $data = [
+            'firstname' => $this->input->post('firstname'),
+            'secondname' => $this->input->post('secondname'),
+            'age' => $this->input->post('age'),
+            'country' => $this->input->post('country'),
+            'city' => $this->input->post('city')
+        ];
 
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, $data);
+    }
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete($this->table);
     }
 }
