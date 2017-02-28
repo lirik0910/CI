@@ -105,10 +105,22 @@ class Articles extends CI_Controller
     }
     public function viewOne($id)
     {
+        $this->load->model('comments_model');
+
         $data['article'] = $this->articles_model->get_by_id($id);
+
+        $data['article_id'] = $id;
+
+        $data['comments'] = 0;
+
+        if(!empty($comments = $this->comments_model->get_by_article($id))){
+            $data['comments'] = $comments;
+        }
 
         $this->load->view('templates/header');
         $this->load->view('articles/one', $data);
+        $this->load->view('comments/create', $data['article_id']);
+        $this->load->view('comments/view', $data['comments']);
         $this->load->view('templates/footer');
     }
 }
